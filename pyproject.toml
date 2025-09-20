@@ -1,0 +1,11 @@
+[project]
+name = "literate-octo-umbrella"
+version = "0.1.dev"
+requires-python = ">=3.10"
+dependencies = ["numpy"]
+
+[tool.setuptools.packages.find]
+include = ["lou"]
+
+[tool.mypy]
+ignore_missing_imports = true
