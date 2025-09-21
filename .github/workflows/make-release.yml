@@ -1,7 +1,7 @@
 name: Reusable workflow to release literate-octo-umbrella
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       git-tag:
         description: Git tag to release
