@@ -14,6 +14,8 @@ on:
 jobs:
   make-release:
     runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@v5
       with:
