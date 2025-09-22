@@ -3,7 +3,7 @@ name: Reusable workflow to release literate-octo-umbrella
 on:
   workflow_dispatch:
     inputs:
-      git-tag:
+      git-ref:
         description: Git tag to release
         type: string
         required: true
@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v5
       with:
-        ref: ${{ inputs.git-tag }}
+        ref: ${{ inputs.git-ref }}
         fetch-depth: 0
     - name: List files
       run: |
@@ -39,12 +39,12 @@ jobs:
       run: |
         python -m pip install build
         python -m build
-    - name: Release version ${{ inputs.git-tag }}
+    - name: Release version ${{ inputs.git-ref }}
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: ${{ inputs.git-tag }}
+        tag_name: ${{ inputs.git-ref }}
         body: |
           \## Changes
-          See the [README](https://github.com/suvayu/literate-octo-umbrella/blob/${{ inputs.git-tag }}/README.md)
+          See the [README](https://github.com/suvayu/literate-octo-umbrella/blob/${{ inputs.git-ref }}/README.md)
         files: |
           dist/*.whl
