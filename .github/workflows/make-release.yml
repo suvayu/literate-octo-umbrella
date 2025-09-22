@@ -19,6 +19,11 @@ jobs:
       with:
         ref: ${{ inputs.git-ref }}
         fetch-depth: 0
+    - name: Test if tag
+      id: commit
+      run: |
+        git describe --tags --exact-match
+        Write-Output "is_tag=$(if ($?) { 'true' } else { 'false' })" >> $Env:GITHUB_OUTPUT
     - name: List files
       run: |
         Get-ChildItem .
@@ -41,7 +46,7 @@ jobs:
         python -m build
         Get-ChildItem dist
     - name: Release version ${{ inputs.git-ref }}
-      if: github.ref_type == 'tag'
+      if: steps.commit.outputs.is_tag == 'true'
       uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ inputs.git-ref }}
@@ -51,7 +56,7 @@ jobs:
         files: |
           dist/*.whl
     - name: Save wheel
-      if: github.ref_type != 'tag'
+      if: steps.commit.outputs.is_tag == 'false'
       uses: actions/upload-artifact@v4
       with:
         name: literate-octo-umbrella
