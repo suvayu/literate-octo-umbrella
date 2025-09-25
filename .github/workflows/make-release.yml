@@ -48,7 +48,7 @@ jobs:
         python -m pip install build
         python -m build
         Get-ChildItem dist
-        Rename-Item 'my dist'
+        Rename-Item dist 'my dist'
         Get-ChildItem 'my dist'
     - name: Release version ${{ inputs.git-ref }}
       if: steps.commit.outputs.is_tag == 'true'
