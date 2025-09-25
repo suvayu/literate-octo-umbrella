@@ -48,6 +48,8 @@ jobs:
         python -m pip install build
         python -m build
         Get-ChildItem dist
+        Rename-Item 'my dist'
+        Get-ChildItem 'my dist'
     - name: Release version ${{ inputs.git-ref }}
       if: steps.commit.outputs.is_tag == 'true'
       uses: softprops/action-gh-release@v2
@@ -57,7 +59,7 @@ jobs:
           \## Changes
           See the [README](https://github.com/suvayu/literate-octo-umbrella/blob/${{ inputs.git-ref }}/README.md)
         files: |
-          dist/*.whl
+          my dist/*.whl
     - name: Save wheel
       if: steps.commit.outputs.is_tag == 'false'
       uses: actions/upload-artifact@v4
